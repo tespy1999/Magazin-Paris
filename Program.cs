@@ -6,31 +6,65 @@ namespace MagazinParis
     {
         static void Main()
         {
-            Console.WriteLine("BUN VENIT LA MAGAZINUL PARIS\n");
+            Console.WriteLine("ADMINISTRARE MAGAZIN PARIS\n");
 
-            Produs produs1 = new Produs("P01", "Suc de mere", 4.50, 50);
-            Produs produs2 = new Produs("P02", "Pringles", 11.00, 30);
+            Console.Write("Cate produse vrei sa adaugi in magazin? ");
+            int nrProduse = int.Parse(Console.ReadLine());
 
-            Client client1 = new Client("Andrei", 50.00);
-            Client client2 = new Client("Maria", 10.00);
+            Inventar inventarMagazin = new Inventar(nrProduse);
 
-            Console.WriteLine("STARE INITIALA");
-            produs1.AfisareInfo();
-            produs2.AfisareInfo();
-            client1.AfisareInfo();
-            client2.AfisareInfo();
+            for (int i = 0; i < nrProduse; i++)
+            {
+                Console.WriteLine($"\nIntroducere date pentru produsul {i + 1}");
 
-            client1.Cumpara(produs1, 5);
+                Console.Write("Cod Unic: ");
+                string cod = Console.ReadLine();
 
-            client2.Cumpara(produs2, 3);
+                Console.Write("Nume produs: ");
+                string nume = Console.ReadLine();
 
-            client1.Cumpara(produs2, 100);
+                Console.Write("Pret: ");
+                double pret = double.Parse(Console.ReadLine());
 
-            Console.WriteLine("\nSTARE DUPA TRANZACTII");
-            produs1.AfisareInfo();
-            produs2.AfisareInfo();
-            client1.AfisareInfo();
-            client2.AfisareInfo();
+                Console.Write("Cantitate (stoc): ");
+                int cantitate = int.Parse(Console.ReadLine());
+
+                Produs produsNou = new Produs(cod, nume, pret, cantitate);
+                inventarMagazin.AdaugaProdus(produsNou);
+            }
+
+            Console.WriteLine("\nINVENTARUL MAGAZINULUI");
+            inventarMagazin.AfiseazaToate();
+
+            Console.WriteLine("\nCAUTARE SI VANZARE PRODUS");
+            Console.Write("Introdu codul produsului pe care vrei sa il cauti: ");
+            string codCautat = Console.ReadLine();
+
+            Produs produsGasit = inventarMagazin.CautaDupaCod(codCautat);
+
+            if (produsGasit != null)
+            {
+                Console.WriteLine("\n[PRODUS GASIT]");
+                produsGasit.AfisareInfo();
+
+                Console.WriteLine("\nClient nou la casa");
+                Console.Write("Nume client: ");
+                string numeClient = Console.ReadLine();
+
+                Console.Write("Buget client (RON): ");
+                double bugetClient = double.Parse(Console.ReadLine());
+
+                Client clientTastatura = new Client(numeClient, bugetClient);
+
+                Console.Write($"Cate bucati de '{produsGasit.Nume}' vrea sa cumpere? ");
+                int bucati = int.Parse(Console.ReadLine());
+
+                clientTastatura.Cumpara(produsGasit, bucati);
+            }
+            else
+            {
+                Console.WriteLine($"\nEroare: Produsul cu codul '{codCautat}' nu a fost gasit in magazin.");
+            }
 
             Console.ReadKey();
         }
