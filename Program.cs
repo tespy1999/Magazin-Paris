@@ -11,7 +11,7 @@ namespace MagazinParis
             Console.Write("Cate produse vrei sa adaugi in magazin? ");
             int nrProduse = int.Parse(Console.ReadLine());
 
-            Inventar inventarMagazin = new Inventar(nrProduse);
+            Inventar inventarMagazin = new Inventar(nrProduse + 1);
 
             for (int i = 0; i < nrProduse; i++)
             {
@@ -29,9 +29,12 @@ namespace MagazinParis
                 Console.Write("Cantitate (stoc): ");
                 int cantitate = int.Parse(Console.ReadLine());
 
-                Produs produsNou = new Produs(cod, nume, pret, cantitate);
+                Produs produsNou = new Produs(cod, nume, pret, cantitate, CategorieProdus.Necunoscut, CaracteristiciProdus.Niciuna);
                 inventarMagazin.AdaugaProdus(produsNou);
             }
+
+            Produs produsDemonstrativ = new Produs("12537486546", "Suc de mere Bio", 12.50, 20, CategorieProdus.Bauturi, CaracteristiciProdus.Bio | CaracteristiciProdus.FaraZahar);
+            inventarMagazin.AdaugaProdus(produsDemonstrativ);
 
             Console.WriteLine("\nINVENTARUL MAGAZINULUI");
             inventarMagazin.AfiseazaToate();
