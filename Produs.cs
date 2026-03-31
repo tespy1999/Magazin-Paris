@@ -4,11 +4,11 @@ namespace MagazinParis
 {
     public enum CategorieProdus
     {
-        Necunoscut,
-        Patiserie,
-        Bauturi,
-        Dulciuri,
-        Gustari
+        Necunoscut = 0,
+        Patiserie = 1,
+        Bauturi = 2,
+        Dulciuri = 3,
+        Gustari = 4
     }
 
     [Flags]
@@ -17,8 +17,8 @@ namespace MagazinParis
         Niciuna = 0,
         Bio = 1,
         Vegan = 2,
-        FaraZahar = 4,
-        FaraGluten = 8
+        FaraZahar = 3,
+        FaraGluten = 4
     }
 
     public class Produs
@@ -38,6 +38,22 @@ namespace MagazinParis
             Cantitate = cantitate;
             Categorie = categorie;
             Caracteristici = caracteristici;
+        }
+
+        public Produs(string linieFisier)
+        {
+            string[] date = linieFisier.Split(';');
+            CodUnic = date[0].Trim();
+            Nume = date[1].Trim();
+            Pret = double.Parse(date[2].Trim());
+            Cantitate = int.Parse(date[3].Trim());
+            Categorie = (CategorieProdus)Enum.Parse(typeof(CategorieProdus), date[4].Trim(), true);
+            Caracteristici = (CaracteristiciProdus)Enum.Parse(typeof(CaracteristiciProdus), date[5].Trim(), true);
+        }
+
+        public string ConversieLaSir_PentruFisier()
+        {
+            return $"{CodUnic};{Nume};{Pret};{Cantitate};{Categorie};{Caracteristici}";
         }
 
         public void AfisareInfo()

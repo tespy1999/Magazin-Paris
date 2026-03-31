@@ -13,6 +13,18 @@ namespace MagazinParis
             Buget = buget;
         }
 
+        public Client(string linieFisier)
+        {
+            string[] date = linieFisier.Split(',');
+            Nume = date[0];
+            Buget = double.Parse(date[1]);
+        }
+
+        public string ConversieLaSir_PentruFisier()
+        {
+            return $"{Nume},{Buget}";
+        }
+
         public void AfisareInfo()
         {
             Console.WriteLine($"Client: {Nume} | Buget disponibil: {Buget} RON");
