@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace MagazinParis
 {
@@ -23,12 +23,14 @@ namespace MagazinParis
 
     public class Produs
     {
-        public string CodUnic;
-        public string Nume;
-        public double Pret;
-        public int Cantitate;
-        public CategorieProdus Categorie;
-        public CaracteristiciProdus Caracteristici;
+        public string CodUnic { get; set; }
+        public string Nume { get; set; }
+        public double Pret { get; set; }
+        public int Cantitate { get; set; }
+        public CategorieProdus Categorie { get; set; }
+        public CaracteristiciProdus Caracteristici { get; set; }
+
+        public Produs() { } // Constructor implicit necesar uneori in WPF
 
         public Produs(string codUnic, string nume, double pret, int cantitate, CategorieProdus categorie, CaracteristiciProdus caracteristici)
         {
