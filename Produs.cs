@@ -29,8 +29,12 @@ namespace MagazinParis
         public int Cantitate { get; set; }
         public CategorieProdus Categorie { get; set; }
         public CaracteristiciProdus Caracteristici { get; set; }
+        public DateTime DataAdaugarii { get; set; }
 
-        public Produs() { } // Constructor implicit necesar uneori in WPF
+        public Produs() 
+        {
+            DataAdaugarii = DateTime.Now;
+        }
 
         public Produs(string codUnic, string nume, double pret, int cantitate, CategorieProdus categorie, CaracteristiciProdus caracteristici)
         {
@@ -40,6 +44,7 @@ namespace MagazinParis
             Cantitate = cantitate;
             Categorie = categorie;
             Caracteristici = caracteristici;
+            DataAdaugarii = DateTime.Now;
         }
 
         public Produs(string linieFisier)
@@ -51,11 +56,16 @@ namespace MagazinParis
             Cantitate = int.Parse(date[3].Trim());
             Categorie = (CategorieProdus)Enum.Parse(typeof(CategorieProdus), date[4].Trim(), true);
             Caracteristici = (CaracteristiciProdus)Enum.Parse(typeof(CaracteristiciProdus), date[5].Trim(), true);
+            
+            if (date.Length > 6)
+                DataAdaugarii = DateTime.Parse(date[6].Trim());
+            else
+                DataAdaugarii = DateTime.Now;
         }
 
         public string ConversieLaSir_PentruFisier()
         {
-            return $"{CodUnic};{Nume};{Pret};{Cantitate};{Categorie};{Caracteristici}";
+            return $"{CodUnic};{Nume};{Pret};{Cantitate};{Categorie};{Caracteristici};{DataAdaugarii:yyyy-MM-dd}";
         }
 
         public void AfisareInfo()
